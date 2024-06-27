@@ -41,6 +41,7 @@ const SearchComponent = () => {
 
   return (
     <Container maxWidth="md" style={{ backgroundColor: '#f0f0f0', marginTop:'100px' }}>
+      
       <div className="all-container">
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={12} sm={6}>

@@ -4,7 +4,23 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../../slices/userSlice';
 import { useParams } from 'react-router-dom';
 import './T_appointment.css';
-
+import {
+    Container,
+    Grid,
+    Typography,
+    Button,
+    Box,
+    Card,
+    CardMedia,
+    CardContent,
+    AppBar,
+    Toolbar,
+    IconButton,
+    Menu,
+    MenuItem,
+    useMediaQuery,
+    useTheme,
+  } from '@mui/material';
 const Appointment_Create = () => {
     const user = useSelector(selectUser);
 
@@ -74,7 +90,12 @@ const Appointment_Create = () => {
 
     return (
         <div className="appointment-create-page1">
-          <div className='background1'></div>
+          <div className='background1'>
+          <Card>
+          <CardMedia component="img" height="620"  image="/images/medicaltourism2.webp" alt="Tourist" style={{ opacity: 0.7 ,  
+    objectFit: 'cover'}} />
+        </Card>
+          </div>
             <div className="form-container1">
                 <h1 className="form-title1">Create Appointment</h1>
                 <form className="appointment-form1" onSubmit={handleSubmit}>

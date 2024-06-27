@@ -14,6 +14,9 @@ import Search from "./pages/Search";
 import Information from "./pages/Information";
 import Example from "./pages/Example";
 import SignUp from "./pages/SignUp";
+import Services from "./pages/Services";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 // Import Tourist pages
 import TouristRegister from "./pages/tourist/t-register";
@@ -107,6 +110,10 @@ const App = () => {
                     <Route path="/t_update" element={<T_Update/>}></Route>
                     <Route path="/search" element={<Search/>}></Route>
                     <Route path="/information" element={<Information/>}></Route>
+                    <Route path="/services" element={<Services/>}></Route> 
+                    <Route path="/about" element={<About/>}></Route>
+                    <Route path="/contact" element={<Contact/>}></Route>
+                    {/* <Route path="/services" element={<Login/>}></Route> */}
                     <Route path="/example" element={<Example/>}></Route>
                     <Route path="/medical" element={<Medical/>}></Route>
                     <Route path="/m_home" element={<M_home/>}></Route>

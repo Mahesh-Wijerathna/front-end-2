@@ -18,6 +18,8 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -27,6 +29,9 @@ import styles from './Home.css';
 const Home = () => {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Check if screen width is less than or equal to 'sm'
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [showValue1, setShowValue1] = useState(false);
   const [showValue2, setShowValue2] = useState(false);
@@ -66,7 +71,7 @@ const Home = () => {
 
   return (
     <Container maxWidth="lg" sx={{ marginLeft: '-20px' }}>
-      <AppBar position="static" sx={{ backgroundColor: '#023047' }}>
+       <AppBar position="static" sx={{ backgroundColor: '#023047',width:1255, ml:-7 }}>
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
@@ -74,45 +79,50 @@ const Home = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Healthy Roam
           </Typography>
-          <Button
-            color="inherit"
-            component={Link}
-            to="/projects"
-            sx={{
-              '&:hover': {
-                textDecoration: 'underline',
-                textDecorationThickness: '2px',
-              },
-            }}
-          >
-            Services
-          </Button>
-          <Button
-            color="inherit"
-            component={Link}
-            to="/about"
-            sx={{
-              '&:hover': {
-                textDecoration: 'underline',
-                textDecorationThickness: '2px',
-              },
-            }}
-          >
-            About Us
-          </Button>
-          <Button
-            color="inherit"
-            component={Link}
-            to="/contact"
-            sx={{
-              '&:hover': {
-                textDecoration: 'underline',
-                textDecorationThickness: '2px',
-              },
-            }}
-          >
-            Contact
-          </Button>
+          {!isMobile && (
+            <>
+            <Button
+                color="inherit"
+                component={Link}
+                to="/"
+                sx={{
+                  '&:hover': {
+                    textDecoration: 'underline',
+                    textDecorationThickness: '2px',
+                  },
+                }}
+              >
+                Home
+              </Button>
+              <Button
+                color="inherit"
+                component={Link}
+                to="/services"
+                sx={{
+                  '&:hover': {
+                    textDecoration: 'underline',
+                    textDecorationThickness: '2px',
+                  },
+                }}
+              >
+                Services
+              </Button>
+              
+              <Button
+                color="inherit"
+                component={Link}
+                to="/contact"
+                sx={{
+                  '&:hover': {
+                    textDecoration: 'underline',
+                    textDecorationThickness: '2px',
+                  },
+                }}
+              >
+                Contact
+              </Button>
+            </>
+          )}
           <Button
             color="inherit"
             component={Link}
@@ -157,8 +167,12 @@ const Home = () => {
             open={Boolean(anchorEl)}
             onClose={handleMenuClose}
           >
-            <MenuItem disabled={user === null  || user.user_type != 'tourist'} onClick={() => handleMenuItemClick('/t_home')}>Tourist</MenuItem>
-            <MenuItem disabled={user === null || user.user_type != 'm_center'} onClick={() => handleMenuItemClick('/m_home')}>Medical Center</MenuItem>
+            <MenuItem disabled={user === null || user.user_type !== 'tourist'} onClick={() => handleMenuItemClick('/t_home')}>
+              Tourist
+            </MenuItem>
+            <MenuItem disabled={user === null || user.user_type !== 'm_center'} onClick={() => handleMenuItemClick('/m_home')}>
+              Medical Center
+            </MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>
@@ -168,6 +182,7 @@ const Home = () => {
           variant="h4"
           gutterBottom
           style={{
+            fontSize:50,
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -178,7 +193,7 @@ const Home = () => {
             fontWeight: 'bold',
           }}
         >
-          Discover Best Medical Centers Nearby, During Your Visit <br /> Down South
+          Discover Best Medical Centers Nearby,<br /> During Your Visit <br /> Down South
           <Box sx={{ textAlign: 'center', py: 10 }}>
             <Button
               component={Link}
@@ -192,9 +207,12 @@ const Home = () => {
           </Box>
         </Typography>
 
-        <Card>
-          <CardMedia component="img" height="520" image="/images/medicaltourism2.webp" alt="Tourist" style={{ opacity: 0.7 }} />
+        <div className='background2'>
+          <Card>
+          <CardMedia component="img" height="620"  image="/images/medicaltourism2.webp" alt="Tourist" style={{ opacity: 0.7 ,  
+    objectFit: 'cover'}} />
         </Card>
+          </div>
       </div>
 
       <Box sx={{ my: 4, textAlign: 'center' }}>
@@ -211,9 +229,9 @@ const Home = () => {
           </Button>
           {showValue1 && (
             <Typography variant="body1" sx={{ mt: 2 }}>
-              Offers users a seamless and efficient way to find nearby healthcare centers in the Southern area. With our
-              intuitive search feature, users can swiftly locate medical facilities tailored to their needs, ensuring
-              convenient access to essential healthcare services.
+              Our platform offers users a seamless and efficient way to find nearby healthcare centers in 
+              the Southern area, ensuring convenient access to essential medical services through our 
+              intuitive search feature.
             </Typography>
           )}
         </Box>
@@ -230,9 +248,11 @@ const Home = () => {
           </Button>
           {showValue2 && (
             <Typography variant="body1" sx={{ mt: 2 }}>
-              Offers users a seamless and efficient way to find nearby healthcare centers in the Southern area. With our
-              intuitive search feature, users can swiftly locate medical facilities tailored to their needs, ensuring
-              convenient access to essential healthcare services.
+              Our platform includes an interactive map feature that allows users to effortlessly 
+              locate nearby healthcare centers in the Southern area. This 
+              intuitive tool enhances convenience, ensuring quick access to essential medical 
+              services tailored to their needs.
+
             </Typography>
           )}
         </Box>
@@ -249,9 +269,8 @@ const Home = () => {
           </Button>
           {showValue3 && (
             <Typography variant="body1" sx={{ mt: 2 }}>
-              Offers users a seamless and efficient way to find nearby healthcare centers in the Southern area. With our
-              intuitive search feature, users can swiftly locate medical facilities tailored to their needs, ensuring
-              convenient access to essential healthcare services.
+              Our platform offers users an intuitive experience with easy online appointment scheduling, 
+              allowing them to swiftly locate and book appointments at nearby healthcare centers in the Southern area.
             </Typography>
           )}
         </Box>

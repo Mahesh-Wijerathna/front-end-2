@@ -1,3 +1,5 @@
+
+@media (min-width: 600px) {
 .App {
     text-align: center;
     background-position: center center;
@@ -7,7 +9,7 @@
     
     
   }
-  
+}
   .App-header {
     background-color: #333;
     color: #fff;
@@ -573,3 +575,10 @@ transition: transform 0.2s ease-in-out;
   }
 }
 
+
+
+.background2 {
+  margin-left: -53px;
+  width: 1250px;
+  
+}

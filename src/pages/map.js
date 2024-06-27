@@ -73,7 +73,8 @@ const MapPage = () => {
 
                         {selectedMarker && (
                             <Overlay anchor={[selectedMarker.location.coordinates[0], selectedMarker.location.coordinates[1]]} offset={[120, 79]}>
-                                <Paper elevation={3} sx={{ padding: 2 }}>
+                                <Paper elevation={3} sx={{ padding: 2  , width: 100,
+                                        height: 600,}} >
                                     <Typography variant="h6">{selectedMarker.name}</Typography>
                                     <Typography variant="body2">{selectedMarker.owner_name}</Typography>
                                     <Typography variant="body2">{selectedMarker.phone_number}</Typography>

@@ -34,7 +34,7 @@ const TouristRegister = () => {
             //     }
             // });
 
-            const response = await axios.post('http://localhost:4005/api/v1/tourist', formData, {
+            const response = await axios.post('https://ds-tourist.onrender.com/api/v1/tourist', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

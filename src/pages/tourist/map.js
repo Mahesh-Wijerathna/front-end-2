@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Map, Marker, Overlay } from 'pigeon-maps';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
@@ -13,25 +13,36 @@ const MapPage = () => {
     const { destination } = useParams();
     const [markers, setMarkers] = useState([]);
     const [selectedMarker, setSelectedMarker] = useState(null);
+    const overlayRef = useRef();
 
     const handleMarkerClick = (marker) => {
-       
         setSelectedMarker(marker);
     };
 
-    const makeAppointment=()=>{
-        if (user==null)
+    const handleClickOutside = (event) => {
+        if (overlayRef.current && !overlayRef.current.contains(event.target)) {
+            setSelectedMarker(null);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const makeAppointment = () => {
+        if (user == null)
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Please Sign Up To Make Appointment!",
                 footer: '<a href="/t_register">Sign Up</a>'
-              });
-
-else
-window.location='/t_appointment';
+            });
+        else
+            window.location = '/t_appointment';
     }
-    
 
     const getMarkers = async () => {
         try {
@@ -66,17 +77,16 @@ window.location='/t_appointment';
 
                         {selectedMarker && (
                             <Overlay anchor={[selectedMarker.location.coordinates[1], selectedMarker.location.coordinates[0]]} offset={[120, 79]}>
-                                <Paper elevation={3} sx={{ padding: 2 }}>
-                                    <Typography variant="h6">{selectedMarker.name}</Typography>
+                                <Paper ref={overlayRef} elevation={3} sx={{ padding: 2, width: 300, height: 200 }}>
+                                    <Typography variant="h6">{selectedMarker.username}</Typography>
                                     <Typography variant="body2">{selectedMarker.owner_name}</Typography>
                                     <Typography variant="body2">{selectedMarker.phone_number}</Typography>
                                     <Typography variant="body2">{selectedMarker.destination}</Typography>
                                     <Typography variant="body2">{selectedMarker.description}</Typography>
                                     <Button variant="contained" color="primary" component={Link} onClick={(e) => {
-                                e.preventDefault();
-                                makeAppointment();
-                                
-                            }}>
+                                        e.preventDefault();
+                                        makeAppointment();
+                                    }}>
                                         Appointment
                                     </Button>
                                 </Paper>

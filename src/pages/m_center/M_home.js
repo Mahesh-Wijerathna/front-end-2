@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './M_home.css';
-import { Card, CardContent, Typography, List, Button, Avatar, Box, Divider } from '@mui/material';
+import { Card, CardContent, Typography, List, Button, Avatar, Box, Divider, Grid } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from '../../slices/userSlice';
@@ -22,7 +22,7 @@ const M_home = () => {
   console.log("User data_:", user.token);
 
   let currentUser = null;
-  
+
   console.log("User data:", currentUser);
 
   const [name, setName] = useState(user.name);
@@ -53,7 +53,7 @@ const M_home = () => {
       setDescription(currentUser.data.description);
       setUsername(currentUser.data.username);
       setImages(currentUser.data.images);
-    
+
     } catch (error) {
       console.error("Error fetching user:", error);
     }
@@ -103,44 +103,46 @@ const M_home = () => {
             <li>
               <Link to="/t_register" className="nav-link">Log Out</Link>
             </li>
+            <li>
+              <Link to="/" className="nav-link">Back</Link>
+            </li>
           </ul>
         </nav>
       </Box>
       <Box className={`content1 ${navOpen ? 'shift' : ''}`}>
         <Button className="open-btn" onClick={toggleNav}>☰</Button>
-        <Box className="profile-box1" sx={{ p: 2, textAlign: 'center' }}>
-          <Avatar src= {images[0] } alt="Profile Icon" sx={{ width: 56, height: 56, mx: 'auto' }} />
-          <Typography variant="h4" className="title" sx={{ mt: 1 }}>{username}</Typography>
-          <Card variant="outlined" sx={{ mt: 2, p: 2 }}>
-            <Typography variant="subtitle1"><strong>Email:</strong> {name}</Typography>
-            <Divider sx={{ my: 1 }} />
-            <Typography variant="subtitle1"><strong>Longitude:</strong> {longitude}</Typography>
-            <Divider sx={{ my: 1 }} />
-            <Typography variant="subtitle1"><strong>Latitude:</strong> {latitude}</Typography>
-            <Divider sx={{ my: 1 }} />
-            <Typography variant="subtitle1"><strong>Destination:</strong> {destination}</Typography>
-            <Divider sx={{ my: 1 }} />
-            <Typography variant="subtitle1"><strong>Phone Number:</strong> {phone_number}</Typography>
-            <Divider sx={{ my: 1 }} />
-            <Typography variant="subtitle1"><strong>Owner Name:</strong> {owner_name}</Typography>
-            <Divider sx={{ my: 1 }} />
-            <Typography variant="subtitle1"><strong>Description:</strong> {description}</Typography>
-          </Card>
-          <Box className="calendar-container" sx={{ mt: 2, textAlign: 'center' }}>
-            <Calendar tileClassName={tileClassName} style={{ width: '100%', maxWidth: '300px', margin: 'auto' }} />
-          </Box>
-        </Box>
-      </Box>
-      <Box className={`content3 ${navOpen ? 'shift' : ''}`}>
-        <Box className="profile-box1" sx={{ p: 2 }}>
-          <Typography variant="h4" className="title1">Upcoming Appointments</Typography>
-          <Box display="flex" alignItems="center" mt={2}>
-            <NotificationsIcon />
-            <Typography variant="h6" sx={{ ml: 1 }}>{appointments.length}</Typography>
-          </Box>
-          <List className='aplist' sx={{ mt: 2 }}>
-            {appointments.map((appointment) => (
-              <Card key={appointment.appointment_id} variant="outlined" sx={{ mb: 2, p: 2, transition: '0.3s', '&:hover': { boxShadow: 6 }, backgroundColor: '#e3f2fd' }} className="card-hover">
+        <Grid container spacing={2} sx={{ mt: 2 }}>
+          <Grid item xs={12} md={6}>
+            <Box className="profile-box1" sx={{ p: 2, textAlign: 'center' }} backgroundColor={"white"}>
+              <Avatar src={images[0]} alt="Profile Icon" sx={{ width: 56, height: 56, mx: 'auto' }} />
+              <Typography variant="h4" className="title" sx={{ mt: 1 }}>{username}</Typography>
+              <Card variant="outlined" sx={{ mt: 2, p: 2 }}>
+                <Typography variant="subtitle1"><strong>Email:</strong> {name}</Typography>
+                <Divider sx={{ my: 1 }} />
+                <Typography variant="subtitle1"><strong>Longitude:</strong> {longitude}</Typography>
+                <Divider sx={{ my: 1 }} />
+                <Typography variant="subtitle1"><strong>Latitude:</strong> {latitude}</Typography>
+                <Divider sx={{ my: 1 }} />
+                <Typography variant="subtitle1"><strong>Destination:</strong> {destination}</Typography>
+                <Divider sx={{ my: 1 }} />
+                <Typography variant="subtitle1"><strong>Phone Number:</strong> {phone_number}</Typography>
+                <Divider sx={{ my: 1 }} />
+                <Typography variant="subtitle1"><strong>Owner Name:</strong> {owner_name}</Typography>
+                <Divider sx={{ my: 1 }} />
+                <Typography variant="subtitle1"><strong>Description:</strong> {description}</Typography>
+              </Card>
+            </Box>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box className="calendar-container" sx={{ p: 2, textAlign: 'center' }}>
+              <Calendar tileClassName={tileClassName} style={{ width: '100%', maxWidth: '300px', margin: 'auto' }} />
+            </Box>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ mt: 2 }}>
+          {appointments.slice(0, 3).map((appointment) => (
+            <Grid item xs={12} sm={4} key={appointment.appointment_id}>
+              <Card variant="outlined" sx={{ p: 2, transition: '0.3s', '&:hover': { boxShadow: 6 }, backgroundColor: '#e3f2fd' }} className="card-hover">
                 <CardContent>
                   <Typography className="black-font" variant="h6">Appointment ID: {appointment.appointment_id}</Typography>
                   <Box display="flex" alignItems="center" mt={1}>
@@ -169,9 +171,44 @@ const M_home = () => {
                   </Box>
                 </CardContent>
               </Card>
-            ))}
-          </List>
-        </Box>
+            </Grid>
+          ))}
+        </Grid>
+        <Grid container spacing={2} sx={{ mt: 2 }}>
+          {appointments.slice(3).map((appointment) => (
+            <Grid item xs={12} sm={4} key={appointment.appointment_id}>
+              <Card variant="outlined" sx={{ p: 2, transition: '0.3s', '&:hover': { boxShadow: 6 }, backgroundColor: '#e3f2fd' }} className="card-hover">
+                <CardContent>
+                  <Typography className="black-font" variant="h6">Appointment ID: {appointment.appointment_id}</Typography>
+                  <Box display="flex" alignItems="center" mt={1}>
+                    <EventIcon />
+                    <Typography className="black-font" variant="body2" sx={{ ml: 1 }}>Date: {appointment.date}</Typography>
+                  </Box>
+                  <Box display="flex" alignItems="center" mt={1}>
+                    <AccessTimeIcon />
+                    <Typography className="black-font" variant="body2" sx={{ ml: 1 }}>Time: {appointment.time}</Typography>
+                  </Box>
+                  <Box display="flex" alignItems="center" mt={1}>
+                    <LocationOnIcon />
+                    <Typography className="black-font" variant="body2" sx={{ ml: 1 }}>Medical Center: {appointment.medical_center}</Typography>
+                  </Box>
+                  <Box display="flex" alignItems="center" mt={1}>
+                    <PersonIcon />
+                    <Typography className="black-font" variant="body2" sx={{ ml: 1 }}>Doctor: {appointment.doctor}</Typography>
+                  </Box>
+                  <Box display="flex" alignItems="center" mt={1}>
+                    <PersonIcon />
+                    <Typography className="black-font" variant="body2" sx={{ ml: 1 }}>Patient: {appointment.patient}</Typography>
+                  </Box>
+                  <Box display="flex" alignItems="center" mt={1}>
+                    <DescriptionIcon />
+                    <Typography className="black-font" variant="body2" sx={{ ml: 1 }}>Description: {appointment.description}</Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       </Box>
     </Box>
   );
